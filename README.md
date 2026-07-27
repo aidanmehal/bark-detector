@@ -1,4 +1,4 @@
-bark-detector
+## bark-detector
 
 `bark-detector` is a privacy-first, self-hosted system for measuring when and how often a dog barks, whines, or otherwise vocalizes while home alone.
 
