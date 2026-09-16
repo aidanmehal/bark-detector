@@ -8,16 +8,15 @@ fn main() -> Result <(), Box<dyn std::error::Error>> {
     println!("Available audio devices: ");
 
     // Print out available audio devices
-    for device in host.devices() {
-        println!(" - {}", device.name()?);
+    for device in host.devices()? {
+        println!(" - {}", device);
     }
-    Ok(())
 
     let device = host
         .default_input_device()
         .expect("Failed to get default input device, none available.");
 
-    println!("Using default input device: {}", device.name()?);
+    println!("Using default input device: {}", device);
 
     let config = device.default_input_config()?;
 
@@ -26,7 +25,7 @@ fn main() -> Result <(), Box<dyn std::error::Error>> {
     // Build and run the input stream based on the sample format
     let stream = match config.sample_format() {
         cpal::SampleFormat::F32 => device.build_input_stream(
-            &config.into(),
+            config.into(),
             move |data: &[f32], _| {
                 let max = data
                     .iter()
@@ -45,7 +44,7 @@ fn main() -> Result <(), Box<dyn std::error::Error>> {
 
         // Handle the i16 sample format
         cpal::SampleFormat::I16 => device.build_input_stream(
-            &config.into(),
+            config.into(),
             move |data: &[i16], _| {
                 let max = data
                     .iter()
