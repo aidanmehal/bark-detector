@@ -12,11 +12,13 @@ fn main() -> Result <(), Box<dyn std::error::Error>> {
         println!(" - {}", device);
     }
 
+    // expecting K38 as microphone 	
     let device = host
-        .default_input_device()
-        .expect("Failed to get default input device, none available.");
+        .input_devices()?
+	.find(|device| device.name().map(|name| mame.contains("K38")).unwrap_or(false))
+        .expect("K38 Mic not found. Try again.");
 
-    println!("Using default input device: {}", device);
+    println!("Using input device: {}", device);
 
     let config = device.default_input_config()?;
 
