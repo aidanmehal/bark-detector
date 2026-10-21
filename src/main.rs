@@ -15,7 +15,7 @@ fn main() -> Result <(), Box<dyn std::error::Error>> {
     // expecting K38 as microphone 	
     let device = host
         .input_devices()?
-	.find(|device| device.name().map(|name| mame.contains("K38")).unwrap_or(false))
+	.find(|device| device.name().map(|name| name.contains("K38")).unwrap_or(false))
         .expect("K38 Mic not found. Try again.");
 
     println!("Using input device: {}", device);
